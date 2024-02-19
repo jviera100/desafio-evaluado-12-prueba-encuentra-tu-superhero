@@ -1,14 +1,16 @@
 $(document).ready(function () {
   //codigo de funcion se ejecuta cuando pagina este cargada
-  $("#form").on("submit", function (e) { //funcion anonima al principio, despues se llama y se define
+  
+
+  $("#form-hero").on("submit", function (e) { //funcion anonima al principio, despues se llama y se define
     //controlador de evento se activara cuando se envie formulario del html
-    let number = parseInt($("#idHero").val());
+    let number = parseInt($("#idHero-hero").val());
     //trae valor de id, lo convierte a numero entero y lo almacena en variable
     //cuando el evento submit envia formulario de bootstrap en el html, se agregan los codigos que siguen abajo para que se limpie el formulario y pueda volver a usar formulario
     e.preventDefault();            // codigo evita que formulario se envie predeterminadamente y no recargue pagina
-    $("#resultado").html("");      //limpia o borra resultado
-    $("#idHero").val("");          //limpia o borra imput
-    $("#chartContainer").html(""); //limpia o borra grafico
+    $("#resultado-hero").html("");      //limpia o borra resultado
+    $("#idHero-hero").val("");          //limpia o borra imput
+    $("#chartContainer-hero").html(""); //limpia o borra grafico
 
     validar(number);  //llama la funcion validar con variable number. En JavaScript, las funciones pueden ser llamadas antes de que sean definidas debido a un comportamiento llamado “hoisting” o “elevación”. En términos simples, JavaScript “mueve” las declaraciones de las funciones al inicio del script, lo que permite que las funciones sean utilizadas antes de que sean declaradas.
   });
@@ -71,7 +73,7 @@ $(document).ready(function () {
 
 
         `;
-            $("#resultado").append(heroe); // Esta línea añade la cadena "heroe" al elemento con el ID "resultado". Es decir que resultado mostrara toda la descripcion del heroe que se digito en el codigo de arriba.  
+            $("#resultado-hero").append(heroe); // Esta línea añade la cadena "heroe" al elemento con el ID "resultado". Es decir que resultado mostrara toda la descripcion del heroe que se digito en el codigo de arriba.  
 
             //Agregamos los valores de las estadisticas
 
@@ -102,7 +104,7 @@ $(document).ready(function () {
               ],
             };
 
-            $("#chartContainer").CanvasJSChart(option);
+            $("#chartContainer-hero").CanvasJSChart(option);
             // Esta línea crea un gráfico de CanvasJS en el elemento con el ID "chartContainer", utilizando las opciones definidas anteriormente.
           } else {
             alert("No se encontro el heroe con ese id"); // Si la respuesta del servidor no incluye una propiedad "response" que es igual a "success", entonces se mostrará una alerta al usuario.

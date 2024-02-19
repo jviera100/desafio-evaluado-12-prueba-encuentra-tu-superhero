@@ -1,0 +1,55 @@
+/* Reset de estilos para todos los elementos de CSS */
+* {
+    margin: 0; /*margen*/
+    padding: 0; /*espacio entre elementos*/
+    border: 0;    /*borde*/
+}
+:root /*  - en raiz = html pones colores globales con variable para reutilizar en todo el CSS */ 
+{
+  --gray: #373a3c;
+  --whit-light: #dddddd;
+  --black: #000;
+  --white: #fff;
+  --red: #dc3545;
+}
+/* logo navbar */
+.logo {
+    width: 50px;    
+}
+body {
+    background-image: url("../img/marvel-vs-dc.jpeg");
+    color: var(--white);
+    padding-top: 100px; /* Ajuste para evitar que el navbar se superponga al contenido */
+}
+/* CARRUSEL cambiar barras por puntos */
+.carousel-indicators [data-bs-target]
+{
+  border-radius: 50%;
+  width: 8px; /* Ajusta el tamaño de los puntos */
+  height: 8px;
+  background-color: var(--white);
+  border: 1px solid var(--black);
+  opacity: 0.5; /* Opacidad de los puntos inactivos */
+  transition: opacity 0.6s ease;
+}
+/* CARRUSEL tamaño */
+#carusel {
+    margin-top: 150px;
+    margin-bottom: 150px;
+    min-width: 300px;
+    max-width: 300px;   
+    min-height: 200px;
+    max-height: 200px;
+}
+/* imagen tarjeta */
+.card-img-top {    
+    min-height: 250px;
+    max-height: 250px;
+}
+/* texto tarjeta */
+.card-body {
+    min-height: 130px;
+    max-height: 130px;
+}
+
+  

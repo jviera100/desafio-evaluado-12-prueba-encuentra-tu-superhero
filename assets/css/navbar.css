@@ -1,0 +1,10 @@
+/* Estilos del navbar */
+#menu {
+    background-color: transparent !important; /* Ajuste para que el navbar sea transparente */
+}
+.navbar-nav {
+    margin-left: auto; /* Mover los elementos del navbar a la derecha */
+}
+.navbar-toggler {
+    color: var(--white) !important; /* Cambiar el color del icono del botón del navbar */
+}
