@@ -9,11 +9,16 @@ $(document).ready(function () {
     
         // Tooltip initialization
         $('[data-bs-toggle="tooltip"]').tooltip();
-    
+      
         // Evento click toolpit
-        $("#enviarCorreo").click(function () {
+         $("#enviarCorreo").click(function () {
             alert("El correo fue enviado correctamente...");
         });
+        // Evento click ultimo formulario join
+        $(".d-inline-block").click(function () {
+            alert("El correo fue enviado correctamente...");
+        });
+       
     
         // Cambia color titulo formulario super hero
         $("#titulo-color").dblclick(function () 
