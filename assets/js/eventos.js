@@ -30,6 +30,13 @@ $(document).ready(function () {
         $(".card-img-top").click(function () {
           $(this).siblings(".card-body").toggle();
         });
+        // boton pdf
+        document.getElementById('abrir-pdf').addEventListener('click', function () {
+            window.open('./M3-28-Prueba_-_Fundamentos_de_programación_en_JavaScript.pdf', '_blank');
+          });
+          
+          
+          
   
     });
   

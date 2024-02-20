@@ -10,4 +10,10 @@
 .header_img{
     width: 350px;
 }
+/* boton PDF */
+#contenedor {
+    display: flex;
+    justify-content: center;
+  }
+  
   

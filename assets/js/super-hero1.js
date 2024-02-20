@@ -1,5 +1,26 @@
 $(document).ready(function () {
-    //codigo de funcion se ejecuta cuando pagina este cargada
+  // Evento click para el botón random
+  $("#randomHeroButton").click(function() {
+      let randomId = Math.floor(Math.random() * 732) + 1; // Genera un ID aleatorio entre 1 y 732
+      $.ajax({
+          url: `https://superheroapi.com/api.php/2619421814940190/${randomId}`,
+          type: 'GET',
+          success: function(respuesta) {
+              // Aquí puedes manejar la respuesta de la API
+              console.log(respuesta); //BOTON RANDOM NO ME RESULTA, SE MUESTRA EN CONSOLA PERO NO EN PAGINA WEB
+          },
+          error: function(error) {
+              alert("No se encontró el héroe con ese ID");
+          },
+      });
+  });
+  $("#randomHeroButton").click(function() {
+    console.log("Botón clickeado");
+    
+});
+
+
+    
       
     $("#form").on("submit", function (e) { //funcion anonima al principio, despues se llama y se define
       //controlador de evento se activara cuando se envie formulario del html
@@ -13,6 +34,7 @@ $(document).ready(function () {
   
       validar(number);  //llama la funcion validar con variable number. En JavaScript, las funciones pueden ser llamadas antes de que sean definidas debido a un comportamiento llamado “hoisting” o “elevación”. En términos simples, JavaScript “mueve” las declaraciones de las funciones al inicio del script, lo que permite que las funciones sean utilizadas antes de que sean declaradas.
     });
+  
   
     //crear una funcion para validar el numero
   
@@ -118,5 +140,7 @@ $(document).ready(function () {
         alert("Ingresa un valor numerico"); // Si el valor ingresado por el usuario no coincide con la expresión regular (es decir, no es un número), entonces se mostrará una alerta al usuario.
       }
     }
+    
   });
+  
   
