@@ -127,35 +127,34 @@
  
 
 <!-- 1° formulario Super Hero API-AJAX --> 
-<main class="m-5 container">
-  <header class="text-center">
-    <img class="header_img" src="./assets/img/sh1.jpg" alt="" />
-  </header>
 
-<!-- muestra respuesta propiedades -->
-      <section id="respuesta-form">
-        <h1 id="titulo-color">Encuentra tu superHero</h1>
-        <form id="form">
-          <div class="form-control">
-            <label for="idHero">Ingresa el número del SuperHero a buscar</label><!-- label es una etiqueta o titulo para el input -->
-            <!-- este label for="idhero" vincula con input id="idhero", significa que cuando haces click en etiqueta label recibe el foco y se resalta cambiando color de fondo o color de borde-->
-            <input class="form-control" type="text" id="idHero" /> <!-- input es cuando usuario ingresa datos tipo texto en formulario -->
-            <button class="btn btn-primary mt-3" type="submit">Buscar</button>
-            <!-- boton por defecto viene tipo boton cambiar a tipo submit-->
+<section>
+  <div class="container mt-5 text-center">
+      <div class="row justify-content-center mb-3">
+          <div class="col-md-4">
+              <div id="liveAlertPlaceholder" class="alert alert-danger" role="alert"></div>
+              <label class="text-warning fs-2"> Encuenta Tu Super Hero</label>                        
+              <input type="number" id="heroInput" class="form-control" placeholder="Ingresa ID del SuperHéroe">
+              <button id="searchButton" class="btn btn-outline-warning  mt-3" type="submit">Buscar
+              </button>
+
           </div>
-        </form>
-      </section>
-<!-- muestra grafico -->
-      <section class="row mt-4">
-        <div id="resultado" class="col-md-6"></div>
-        <div  id="chartContainer"  class= "col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" ></div>
-      </section>
-
-<!-- boton hero random -->
-<button id="randomHeroButton" class="btn btn-primary mt-3">Boton obtener héroe aleatorio no funciona e intente buscar por nombre tampoco y solo busco por numero pero da alerta el numero ingresado y nose porque</button>
-
-
-      
+      </div>
+      <div class="row">
+          <div id="logo" class="col-12 col-md-12">
+              <img class="header_img" src="./assets/img/sh1.jpg" c alt="Logo Super Hero">
+          </div>
+          <div id="heroCard" class="col-12 col-md-6">
+              <!-- Contenido de heroCard aquí -->
+          </div>
+          <div class="col-12 col-md-6">
+              <div class="" id="heroChart">
+                  <!-- Contenido de heroChart aquí -->
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
       
 
 

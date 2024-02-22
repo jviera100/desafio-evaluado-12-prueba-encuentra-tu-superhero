@@ -1,146 +1,115 @@
 $(document).ready(function () {
-  // Evento click para el botón random
-  $("#randomHeroButton").click(function() {
-      let randomId = Math.floor(Math.random() * 732) + 1; // Genera un ID aleatorio entre 1 y 732
-      $.ajax({
-          url: `https://superheroapi.com/api.php/2619421814940190/${randomId}`,
-          type: 'GET',
-          success: function(respuesta) {
-              // Aquí puedes manejar la respuesta de la API
-              console.log(respuesta); //BOTON RANDOM NO ME RESULTA, SE MUESTRA EN CONSOLA PERO NO EN PAGINA WEB
-          },
-          error: function(error) {
-              alert("No se encontró el héroe con ese ID");
-          },
-      });
+  $('#searchButton').click(function () {
+      let heroId = $('#heroInput').val().trim(); // Paso 1: Captura de información
+
+      // Genera un ID aleatorio si el input está vacío
+      if (heroId === '') {
+          heroId = Math.floor(Math.random() * 732) + 1; // Genera un ID aleatorio entre 1 y 732
+      }
+
+      if (isValidInput(heroId)) { // Paso 3: Comprobación de la entrada del usuario
+          getHeroInfo(heroId);
+          $('#liveAlertPlaceholder').hide(); // Oculta el mensaje de error si la entrada es válida
+          $('#logo').hide(); // Esto ocultará el div con id="logo"
+      } else {
+          $('#liveAlertPlaceholder').text('Por favor, ingresa un número válido.').show(); // Paso 8: Manejo de errores
+      }
   });
-  $("#randomHeroButton").click(function() {
-    console.log("Botón clickeado");
-    
 });
 
 
-    
-      
-    $("#form").on("submit", function (e) { //funcion anonima al principio, despues se llama y se define
-      //controlador de evento se activara cuando se envie formulario del html
-      let number = parseInt($("#idHero").val());
-      //trae valor de id, lo convierte a numero entero y lo almacena en variable
-      //cuando el evento submit envia formulario de bootstrap en el html, se agregan los codigos que siguen abajo para que se limpie el formulario y pueda volver a usar formulario
-      e.preventDefault();            // codigo evita que formulario se envie predeterminadamente y no recargue pagina
-      $("#resultado").html("");      //limpia o borra resultado
-      $("#idHero").val("");          //limpia o borra imput
-      $("#chartContainer").html(""); //limpia o borra grafico
-  
-      validar(number);  //llama la funcion validar con variable number. En JavaScript, las funciones pueden ser llamadas antes de que sean definidas debido a un comportamiento llamado “hoisting” o “elevación”. En términos simples, JavaScript “mueve” las declaraciones de las funciones al inicio del script, lo que permite que las funciones sean utilizadas antes de que sean declaradas.
-    });
-  
-  
-    //crear una funcion para validar el numero
-  
-    function validar(num) { //definicion de funcion validar con argumento num
-      let expresion = /^[0-9]+$/;  //expresion regular numerica
-      if (expresion.test(num)) {   //metodo test prueba si argumento num coincide con expresion regular
-    //conectar a la API con solicitud al servidor de AJAX sin recargar pagina
-    // las API se utilizan para obtener datos dinámicos que tu aplicación necesita para realizar alguna función.
-        $.ajax({                         
-          datatype: "json", //tipo datos esperado
-          method: "GET", //metodo solicitud
-          url: `https://superheroapi.com/api.php/2619421814940190/${num}`,
-          //url solicitud y agregar numero ingresado por el usuario
-          success: function (respuesta) {    //Esta función se ejecutará si la solicitud AJAX tiene éxito. La respuesta del servidor se pasa a la función como el argumento "respuesta".
-            if (respuesta.response === "success") {    //Si la respuesta del servidor incluye una propiedad "response" que es igual a "success", entonces el código dentro de este bloque if se ejecutará.
-              //Aquí se está creando una cadena de texto que contiene HTML. Esta cadena se utilizará para mostrar información sobre el superhéroe en la página.
-              let heroe = `                  
-  <h3>Super Heroe Encontrado</h3>
-      <div class="card">
-        <div class="row">
-          <div class="col-md-4">
-            <img src="${respuesta.image.url}" class="card-img" alt="" />
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">Nombre: ${respuesta.name} </h5>
-              <p class="card-text">
-                Conexiones:${respuesta.connections["group-affiliation"]}
-              </p>
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <em>Publicado por </em>: ${respuesta.biography.publisher}
-                </li>
-                <li class="list-group-item">
-                  <em>Ocupación: ${respuesta.work.occupation} </em>
-                </li>
-                <li class="list-group-item">
-                  <em
-                    >Primera Aparición:
-                    ${respuesta.biography["first-appearance"]}</em
-                  >
-                </li>
-                <li class="list-group-item">
-                  <em>Altura: ${respuesta.appearance.height.join(" - ")} </em>
-                </li>
-                <li class="list-group-item">
-                  <em>Peso: ${respuesta.appearance.weight.join(" - ")} </em>
-                </li>
-                <li class="list-group-item">
-                  <em>Aliases:  ${respuesta.biography.aliases}</em>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-  
-          `;
-              $("#resultado").append(heroe); // Esta línea añade la cadena "heroe" al elemento con el ID "resultado". Es decir que resultado mostrara toda la descripcion del heroe que se digito en el codigo de arriba.  
-  
-              //Agregamos los valores de las estadisticas
-  
-              let datosXY = [];
-              for (let key in respuesta.powerstats) {
-                datosXY.push({
-                  label: key,
-                  y: parseInt(respuesta.powerstats[key]), //datos de iterar powerstats
-                });
-              }
-              // Este bucle recorre las estadísticas de poder del superhéroe y las añade a la matriz "datosXY".
-              console.log(datosXY);
-  
-              let option = { // Aquí se está creando un objeto que contiene opciones para un gráfico de CanvasJS.
-                title: {
-                  text: `Estadísticas de Poder para ${respuesta.name}`, //titulo
-                },
-                data: [
-                  {
-                    type: "pie",  //tipo grafico
-                    startAngle: 45, //configuraciones para que grafico se muestre
-                    showInLegend: "true",
-                    legendText: "{label}",
-                    indexLabel: "{label} ({y})",
-                    yValueFormatString: "#,##0.#" % "",
-                    dataPoints: datosXY,
-                  },
-                ],
-              };
-  
-              $("#chartContainer").CanvasJSChart(option);
-              // Esta línea crea un gráfico de CanvasJS en el elemento con el ID "chartContainer", utilizando las opciones definidas anteriormente.
-            } else {
-              alert("No se encontro el heroe con ese id"); // Si la respuesta del servidor no incluye una propiedad "response" que es igual a "success", entonces se mostrará una alerta al usuario.
-            }
-          },
-  
-          error: function (error) {
-            alert("no se encontro el heroe");// Esta función se ejecutará si la solicitud AJAX falla por alguna razón. En ese caso, se mostrará una alerta al usuario.
-          },
-        });
-      } else {
-        alert("Ingresa un valor numerico"); // Si el valor ingresado por el usuario no coincide con la expresión regular (es decir, no es un número), entonces se mostrará una alerta al usuario.
+
+
+// 1.- valida que input sea un número
+// Se verifica que num no sea NaN para asegurarse de que sea un número.
+// Se verifica que num esté en el rango de 1 a 731. Ambos Inclusive
+
+function isValidInput(input) {
+  return !isNaN(input) && !isNaN(parseInt(input, 10)) && input >= 1 && input <= 731
+}
+
+
+// function isValidInput2(input) {
+//     return /^[a-zA-Z\s]+$/.test(input);
+// }
+
+
+// Funcion para obtener la Informacion mediantre API
+function getHeroInfo(heroId) {
+  $.ajax({ // Paso 4: Consulta a la API
+      url: `https://superheroapi.com/api.php/10232407405152330/${heroId}`,
+      type: 'GET',
+      dataType: 'json',
+      success: function (data) {
+          renderHeroCard(data); // Paso 5: Renderizar información
+          renderHeroStatsChart(data); // Paso 7: Uso de CanvasJS para gráficos de torta o pie
+          $('#liveAlertPlaceholder').hide(); // Oculta el mensaje de error si la entrada es válida
+      },
+      error: function () {
+          $('#liveAlertPlaceholder').text('Eror al buscar la información del superhéroe..').show(); // Paso 8: Manejo de errores
       }
-    }
-    
   });
-  
-  
+}
+
+
+
+// Paso 6: Uso de ciclos/métodos de arreglos que permitan ordenar y mostrar la información
+function renderHeroCard(hero) {
+
+  let cardHtml = `
+              <div class="card mb-3"  >
+              <div class="row g-0">
+                  <div class="col-md-4">
+                      <img src="${hero.image.url}" class="card-img-top" alt="${hero.name}">
+                      <div class="card-body">
+                          <h5 class="card-title"><span class="fw-bold"> ${hero.name}</span></h5>
+                      </div>
+                  </div>
+              <div class="col-md-8">   
+                    
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item text-start"><span class="fw-bold">Conexiones: </span> ${hero.connections['group-affiliation']}</li>
+                          <li class="list-group-item text-start"><span class="fw-bold">Publicado por: </span> ${hero.biography.publisher}</li>
+                          <li class="list-group-item text-start"><span class="fw-bold">Ocupación: </span> ${hero.work.occupation}</li>
+                          <li class="list-group-item text-start"><span class="fw-bold">Primera Aparición: </span> ${hero.biography['first-appearance']}</li>
+                          <li class="list-group-item text-start"><span class="fw-bold">Altura: </span>${hero.appearance.height.join("  - ")}</li> 
+                          <li class="list-group-item text-start"><span class="fw-bold">Peso: </span>${hero.appearance.weight.join(" - ")}</li> 
+                          <li class="list-group-item text-start"><span class="fw-bold">Alianzas: </span>${hero.biography.aliases}</li>
+                      </ul >
+              </div >
+              </div>
+      `;
+  $('#heroCard').html(cardHtml);
+  // Renderiza la tarjeta del héroe -  ajusta la altura de heroChart
+}
+
+
+function renderHeroStatsChart(hero) {
+  let chart = new CanvasJS.Chart("heroChart", {
+      theme: "dark2",
+      exportEnabled: true,
+      animationEnabled: true,
+      title: {
+          text: `Estadísticas de Poder para ${hero.name} `
+      },
+      data: [{
+          type: "pie", // Tipo de gráfico de pastel
+          startAngle: 10,
+          toolTipContent: "<b>{label}</b>: {y}%", // Mostrar porcentaje en el tooltip
+          showInLegend: "true",
+          legendText: "{label}",
+          indexLabelFontSize: 16,
+          indexLabel: "{label} ({y})", // Mostrar etiquetas con porcentaje
+          dataPoints: [
+              { y: hero.powerstats.intelligence, label: "Inteligencia" },
+              { y: hero.powerstats.strength, label: "Fuerza" },
+              { y: hero.powerstats.speed, label: "Velocidad" },
+              { y: hero.powerstats.durability, label: "Durabilidad" },
+              { y: hero.powerstats.power, label: "Poder" },
+              { y: hero.powerstats.combat, label: "Combate" }
+          ]
+      }]
+  });
+  chart.render();
+
+}

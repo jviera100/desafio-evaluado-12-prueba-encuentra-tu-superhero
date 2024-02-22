@@ -8,3 +8,17 @@
 .navbar-toggler {
     color: var(--white) !important; /* Cambiar el color del icono del botón del navbar */
 }
+/* Estilos Inside Menu Lateral */
+
+/* .offcanvas-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+.offcanvas-header .contenedor_logo {
+  width: 50%;
+  margin-inline: auto;
+}
+.offcanvas-header img {
+  width: 100%;
+} */

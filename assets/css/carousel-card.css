@@ -17,7 +17,7 @@
     width: 50px;    
 }
 body {
-    background-image: url("../img/marvel-vs-dc.jpeg");
+    background-image: url("../img/marvel-vs-dc.jpeg");    
     color: var(--white);
     padding-top: 100px; /* Ajuste para evitar que el navbar se superponga al contenido */
 }
